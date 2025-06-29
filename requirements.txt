@@ -1,2 +1,2 @@
-amiyautils~=0.0.1
-concurrent-log-handler~=0.9.20
+amiyautils~=0.1.1
+concurrent-log-handler~=0.9.28
