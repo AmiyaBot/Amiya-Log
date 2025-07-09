@@ -103,6 +103,7 @@ class LoggerManager:
         desc: Optional[str] = None,
         ignore: Optional[List[Union[Type[Exception], Type[BaseException]]]] = None,
         handler: Optional[Callable[[Exception], Awaitable[None]]] = None,
+        print_traceback: bool = True,
     ):
         try:
             yield
@@ -110,7 +111,7 @@ class LoggerManager:
             if ignore and type(err) in ignore:
                 return
 
-            error_message = self.error(err, desc)
+            error_message = self.error(err if print_traceback else str(err), desc)
 
             if handler and error_message:
                 await handler(err)
@@ -121,6 +122,7 @@ class LoggerManager:
         desc: Optional[str] = None,
         ignore: Optional[List[Union[Type[Exception], Type[BaseException]]]] = None,
         handler: Optional[Callable[[Exception], None]] = None,
+        print_traceback: bool = True,
     ):
         try:
             yield
@@ -128,7 +130,7 @@ class LoggerManager:
             if ignore and type(err) in ignore:
                 return
 
-            error_message = self.error(err, desc)
+            error_message = self.error(err if print_traceback else str(err), desc)
 
             if handler and error_message:
                 handler(err)
